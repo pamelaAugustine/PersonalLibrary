@@ -1,0 +1,62 @@
+html
+  head
+    title Personal Library
+    meta(name='description', content='A cool thing made with Glitch')
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', href='/public/style.css')
+    script(src='/public/client.js')
+
+  body
+    h1.center Personal Library
+
+    p.center Enter A Book
+      form(action='/api/books', method='post')
+        div
+          label Book Title:     
+          input(type='text', name='booktitle', placeholder='Book Title')
+        br
+        //- div
+        //-   label Password: 
+        //-   input(type='password', name='password')
+        //- br
+        div
+          input(type='submit', value='Enter')
+          
+    
+    hr
+    p.center Enter a Comment
+      form(action='/api/books/comment', method='post')
+        div
+          label Comment  
+          input(type='text', name='bookcomment')
+        br
+        div
+          label What book?  
+          input(type='text', name='reference', placeholder='Book Title')
+        div
+        br
+        input(type='submit', value='Enter')
+
+    hr
+
+    h2 These are your books:
+    
+   
+    for book in books
+        h3  #{book.title} 
+          a(href=`/api/books/` + `${book.bookId}`) x
+        | Comment Count: (#{book.count})
+          
+    
+
+        for comment in book.comments
+            ul
+              li "#{comment}"
+               
+    br
+    br
+
+    form(action="/api/books/deleteall", method="post")
+      input(type='submit', value='Delete Library')
